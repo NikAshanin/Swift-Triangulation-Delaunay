@@ -3,38 +3,14 @@ import GameplayKit
 
 public class TriangleView: UIView {
 
-    public override init(frame: CGRect) {
-        super.init(frame: frame)
-        commonInit()
-    }
-
-    public required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        commonInit()
-    }
-
-    private func commonInit() {
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(self.recalculate),
-            name: NSNotification.Name(rawValue: "vertex"),
-            object: nil)
-    }
-
-    @objc func recalculate(notification: NSNotification){
-        guard let userInfo = notification.userInfo as? [String: Any] else {
-            return
-        }
-
-        if let array: Array<Vertex> = userInfo["vertex"] as? Array<Vertex> {
-            DispatchQueue.main.async {
-                self.calculateMask(vertices: array)
-            }
+    public func recalculate(vertexes: [Vertex]) {
+        DispatchQueue.main.async {
+            self.calculateMask(vertices: vertexes)
         }
     }
 
     private func calculateMask(vertices: [Vertex]) {
-        if let sublayers = self.layer.sublayers {
+        if let sublayers = layer.sublayers {
             for sublayer in sublayers {
                 sublayer.removeFromSuperlayer()
             }

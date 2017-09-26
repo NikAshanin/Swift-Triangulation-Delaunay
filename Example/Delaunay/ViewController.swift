@@ -13,11 +13,14 @@ final class ViewController: UIViewController {
 
     lazy var previewLayer: AVCaptureVideoPreviewLayer? = {
         guard let session = self.session else { return nil }
-
         var previewLayer = AVCaptureVideoPreviewLayer(session: session)
         previewLayer.videoGravity = .resizeAspectFill
-
         return previewLayer
+    }()
+
+    private lazy var triangleView: TriangleView = {
+        let triangleView = TriangleView(frame: view.bounds)
+        return triangleView
     }()
 
     var frontCamera: AVCaptureDevice? = {
@@ -43,7 +46,6 @@ final class ViewController: UIViewController {
 
         view.layer.addSublayer(previewLayer)
 
-        let triangleView = TriangleView(frame: view.bounds)
         view.insertSubview(triangleView, at: Int.max)
     }
 
@@ -91,7 +93,7 @@ extension ViewController: AVCaptureVideoDataOutputSampleBufferDelegate {
         let attachments = CMCopyDictionaryOfAttachments(kCFAllocatorDefault, sampleBuffer, kCMAttachmentMode_ShouldPropagate)
         let ciImage = CIImage(cvImageBuffer: pixelBuffer!, options: (attachments as? [String : Any]?)!)
 
-        //leftMirrored for front camera
+        // leftMirrored for front camera
         let ciImageWithOrientation = ciImage.oriented(forExifOrientation: Int32(UIImageOrientation.leftMirrored.rawValue))
 
         detectFace(on: ciImageWithOrientation)
@@ -127,8 +129,7 @@ extension ViewController {
                                              id: index))
                     }
 
-                    let dict = ["vertex": maparr]
-                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "vertex"), object: nil, userInfo: dict)
+                    triangleView.recalculate(vertexes: maparr)
                 }
             }
         }
@@ -149,12 +150,4 @@ extension ViewController {
         return []
     }
 
-    func convert(_ points: UnsafePointer<vector_float2>, with count: Int) -> [(x: CGFloat, y: CGFloat)] {
-        var convertedPoints = [(x: CGFloat, y: CGFloat)]()
-        for i in 0...count {
-            convertedPoints.append((CGFloat(points[i].x), CGFloat(points[i].y)))
-        }
-
-        return convertedPoints
-    }
 }
