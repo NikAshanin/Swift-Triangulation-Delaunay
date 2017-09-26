@@ -1,0 +1,118 @@
+disabled_rules:
+  - identifier_name
+excluded:
+  - Carthage
+  - Pods
+
+line_length: 128
+type_body_length:
+  - 500 # warning
+  - 700 # error
+file_length:
+  warning: 500
+  error: 1200
+warning_threshold: 1
+
+custom_rules:
+  uiwebview_disabled:
+    included: ".*.swift"
+    name: "UIWebView Usage Disabled"
+    regex: 'UIWebView'
+    message: "Do not use UIWebView. Use WKWebView Instead. https://developer.apple.com/reference/uikit/uiwebview"
+    severity: error
+
+  zero:
+    name: "Short .zero"
+    regex: '\(top: 0, left: 0, bottom: 0, right: 0\)'
+    message: "Please use short init `.zero`."
+    severity: error
+
+  let_variable:
+    name: "Let Variable"
+    regex: 'var\s\w*(:|(\s=))\sVariable'
+    message: "Please make variable using `let`."
+    severity: error
+
+  marks_style:
+    name: "Marks"
+    regex: '// MARK: -?[a-zA-Z0-9]'
+    message: "Marks should follow the following structure: // MARK: - Comment."
+    severity: warning
+
+  no_header_comments:
+    name: "Header Comments"
+    regex: '//\s*Created by.*\s*//\s*Copyright'
+    match_kinds:
+      - comment
+    message: "Template header comments should be removed."
+
+  private_outlet:
+    name: "Outlet"
+    regex: '@IBOutlet(\sweak)?(\s(file)?private(\(set\))?)?\svar'
+    message: "Please use some of `private` modifiers and make property it weak. Use pattern: `IBOutlet private weak var`."
+    severity: error
+
+  delegate:
+    name: "Delegate"
+    regex: '(?<!weak\s)var\s\w*(D|d)elegate\w*:'
+    message: "Please use `weak` for `delegate`. "
+    severity: error
+
+  unnecessary_type:
+   name: "Unnecessary Type"
+   regex: '[ @a-zA-Z]*(?:let|var)\s\w*: ([a-zA-Z0-9]*)\?? = \1'
+   message: "Type definition not needed"
+   severity: error
+
+  unowned:
+    name: "Unowned"
+    regex: 'unowned'
+    message: "Please use `weak` instead. "
+    severity: error
+
+  empty_count_zero:
+    name: "Empty Count Violation"
+    regex: '\.count\s*(==|!=|<|<=|>|>=)\s*0'
+    message: "Prefer checking `isEmpty` over comparing `count` to zero."
+    severity: warning
+
+  # Should be { braces_body } instead of {braces_body}
+  spaces_around_braces:
+    included: ".*.swift"
+    name: "Spaces around the braces"
+    regex: '(([A-Za-z0-9])[\{\}])|([\{\}]([A-Za-z0-9]))'
+    message: "No spaces around the braces"
+    severity: error
+    match_kinds:
+    - attribute.builtin
+    - attribute.id
+    - buildconfig.id
+    - buildconfig.keyword
+    - identifier
+    - keyword
+    - objectliteral
+    - parameter
+    - placeholder
+    - typeidentifier
+
+  inout_keyword:
+    name: "Inout"
+    regex: 'inout'
+    message: "Don't use inout arguments"
+    severity: error
+    match_kinds: keyword
+
+  cyrillic_strings:
+    name: "Cyrillic strings"
+    regex: '[а-яА-Я]+'
+    message: "Localize or translate"
+    severity: error
+    match_kinds: 
+    - identifier
+    - string
+
+  simple_ban:
+    name: "Simple type name"
+    regex: '(class|struct)(.)+[sS]imple(.)+\{'
+    message: "Don't use 'simple' in type name, use 'default' or 'base' instead"
+    severity: warning

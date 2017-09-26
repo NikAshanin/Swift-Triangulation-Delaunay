@@ -1,0 +1,6 @@
+framework module Pods_Delaunay_Tests {
+  umbrella header "Pods-Delaunay_Tests-umbrella.h"
+
+  export *
+  module * { export * }
+}

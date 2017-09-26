@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'Delaunay_Example' do
+  pod 'Delaunay', :path => '../'
+
+  target 'Delaunay_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
