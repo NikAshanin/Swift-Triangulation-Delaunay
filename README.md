@@ -6,8 +6,7 @@
 [![Platform](https://img.shields.io/cocoapods/p/Delaunay.svg?style=flat)](http://cocoapods.org/pods/Delaunay)
 
 
-<img src="/resources/facetriangleone.png" height="100">
-![example](/resources/facetriangleone.png =250x250)
+<img src="/resources/facetriangleone.png" height="300">
 
 ## Example
 
