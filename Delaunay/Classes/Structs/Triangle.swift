@@ -1,7 +1,11 @@
 import CoreGraphics
 
 /// A simple struct representing 3 vertices
-public class Triangle {
+public final class Triangle {
+
+    public var vertex1: Vertex
+    public var vertex2: Vertex
+    public var vertex3: Vertex
 
     public init(vertex1: Vertex, vertex2: Vertex, vertex3: Vertex) {
         self.vertex1 = vertex1
@@ -9,21 +13,6 @@ public class Triangle {
         self.vertex3 = vertex3
     }
 
-    public var vertex1: Vertex
-    public var vertex2: Vertex
-    public var vertex3: Vertex
-
-    public func v1() -> CGPoint {
-        return vertex1.pointValue()
-    }
-
-    public func v2() -> CGPoint {
-        return vertex2.pointValue()
-    }
-
-    public func v3() -> CGPoint {
-        return vertex3.pointValue()
-    }
 }
 
 public extension Triangle {
@@ -31,9 +20,9 @@ public extension Triangle {
     public func toPath() -> CGPath {
 
         let path = CGMutablePath()
-        let point1 = vertex1.pointValue()
-        let point2 = vertex2.pointValue()
-        let point3 = vertex3.pointValue()
+        let point1 = vertex1.point
+        let point2 = vertex2.point
+        let point3 = vertex3.point
 
         path.move(to: point1)
         path.addLine(to: point2)

@@ -15,10 +15,10 @@ import Foundation
         var ymax = -Double(Int32.max)
 
         for i in 0..<vertices.count {
-            if vertices[i].x < xmin { xmin = vertices[i].x }
-            if vertices[i].x > xmax { xmax = vertices[i].x }
-            if vertices[i].y < ymin { ymin = vertices[i].y }
-            if vertices[i].y > ymax { ymax = vertices[i].y }
+            if Double(vertices[i].point.x) < xmin { xmin = Double(vertices[i].point.x) }
+            if Double(vertices[i].point.x) > xmax { xmax = Double(vertices[i].point.x) }
+            if Double(vertices[i].point.y) < ymin { ymin = Double(vertices[i].point.y) }
+            if Double(vertices[i].point.y) > ymax { ymax = Double(vertices[i].point.y) }
         }
 
         let dx = xmax - xmin
@@ -28,20 +28,20 @@ import Foundation
         let ymid = ymin + dy * 0.5
 
         return [
-            Vertex(x: xmid - 20 * dmax, y: ymid - dmax, id: 0),
-            Vertex(x: xmid, y: ymid + 20 * dmax, id: 0),
-            Vertex(x: xmid + 20 * dmax, y: ymid - dmax, id: 0)
+            Vertex(point: CGPoint(x: xmid - 20 * dmax, y: ymid - dmax), id: 0),
+            Vertex(point: CGPoint(x: xmid, y: ymid + 20 * dmax), id: 0),
+            Vertex(point: CGPoint(x: xmid + 20 * dmax, y: ymid - dmax), id: 0)
         ]
     }
 
     /* Calculate a circumcircle for a set of 3 vertices */
     fileprivate func circumcircle(_ i: Vertex, j: Vertex, k: Vertex) -> CircumCircle {
-        let x1 = i.x
-        let y1 = i.y
-        let x2 = j.x
-        let y2 = j.y
-        let x3 = k.x
-        let y3 = k.y
+        let x1 = Double(i.point.x)
+        let y1 = Double(i.point.y)
+        let x2 = Double(j.point.x)
+        let y2 = Double(j.point.y)
+        let x3 = Double(k.point.x)
+        let y3 = Double(k.point.y)
         let xc: Double
         let yc: Double
 
@@ -142,7 +142,7 @@ import Foundation
 
         /* Make an array of indices into the vertex array, sorted by the
          * vertices' x-position. */
-        var indices = [Int](0..<n).sorted {  _vertices[$0].x < _vertices[$1].x }
+        var indices = [Int](0..<n).sorted { _vertices[$0].point.x < _vertices[$1].point.x }
 
         /* Next, find the vertices of the supertriangle (which contains all other
          * triangles) */
@@ -168,7 +168,7 @@ import Foundation
                 /* If this point is to the right of this triangle's circumcircle,
                  * then this triangle should never get checked again. Remove it
                  * from the open list, add it to the closed list, and skip. */
-                let dx = _vertices[c].x - open[j].x
+                let dx = Double(_vertices[c].point.x) - open[j].x
 
                 if dx > 0 && dx * dx > open[j].rsqr {
                     completed.append(open.remove(at: j))
@@ -176,7 +176,7 @@ import Foundation
                 }
 
                 /* If we're outside the circumcircle, skip this triangle. */
-                let dy = _vertices[c].y - open[j].y
+                let dy = Double(_vertices[c].point.y) - open[j].y
 
                 if dx * dx + dy * dy - open[j].rsqr > Double.ulpOfOne {
                     continue

@@ -4,8 +4,8 @@ import GameplayKit
 public class TriangleView: UIView {
 
     public func recalculate(vertexes: [Vertex]) {
-        DispatchQueue.main.async {
-            self.calculateMask(vertices: vertexes)
+        DispatchQueue.main.async { [weak self] in
+            self?.calculateMask(vertices: vertexes)
         }
     }
 

@@ -1,9 +1,8 @@
 {
   "name": "Delaunay",
   "version": "0.1.0",
-  "summary": "A short description of Delaunay.",
-  "description": "TODO: Add long description of the pod here.",
-  "homepage": "https://github.com/NikAshanin/Delaunay",
+  "summary": "A swift representation for triangulation of Delaunay.",
+  "homepage": "https://github.com/NikAshanin/Swift-Triangulation-Delaunay",
   "license": {
     "type": "MIT",
     "file": "LICENSE"
@@ -12,11 +11,11 @@
     "NikAshanin": "nv.ashanin@gmail.com"
   },
   "source": {
-    "git": "https://github.com/NikAshanin/Delaunay.git",
+    "git": "https://github.com/NikAshanin/Swift-Triangulation-Delaunay.git",
     "tag": "0.1.0"
   },
   "platforms": {
-    "ios": "8.0"
+    "ios": "11.0"
   },
   "source_files": "Delaunay/Classes/**/*"
 }
